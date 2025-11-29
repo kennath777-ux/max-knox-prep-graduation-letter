@@ -13,8 +13,18 @@
       padding: 15px;
       max-width: 800px;
       margin: 0 auto;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e9f7ef"/><path d="M0,50 Q25,40 50,50 T100,50" stroke="%23c1e1c5" stroke-width="0.5" fill="none"/></svg>');
+      /* 默认背景：带曲线的淡绿色 */
+      background-image: url('image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23e9f7ef"/><path d="M0,50 Q25,40 50,50 T100,50" stroke="%23c1e1c5" stroke-width="0.5" fill="none"/></svg>');
       background-attachment: fixed;
+      transition: background-image 0.8s ease, background-color 0.8s ease; /* 平滑过渡 */
+    }
+    /* 全家福背景样式 */
+    body.family-bg {
+      background-image: url('family.jpg') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-color: rgba(248, 249, 250, 0.92) !important; /* 半透明白色遮罩 */
+      background-blend-mode: overlay !important;
     }
     .container {
       background: white;
@@ -23,6 +33,10 @@
       box-shadow: 0 5px 25px rgba(0,0,0,0.07);
       position: relative;
       margin-top: 15px;
+      transition: box-shadow 0.5s ease; /* 容器阴影随背景变化 */
+    }
+    body.family-bg .container {
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15); /* 全家福背景时加深阴影 */
     }
     .header {
       text-align: center;
@@ -104,6 +118,20 @@
       margin: 0 3px;
       vertical-align: middle;
     }
+    /* 全家福提示 */
+    .family-note {
+      text-align: center;
+      margin-top: 15px;
+      font-style: italic;
+      color: #5d4037;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.6s ease;
+    }
+    body.family-bg .family-note {
+      opacity: 1;
+      transform: translateY(0);
+    }
     @media (max-width: 600px) {
       .container {
         padding: 25px 18px;
@@ -167,17 +195,35 @@
     </div>
   </div>
 
+   <div class="family-note">
+      💖 播放结束的惊喜<br>
+      （刷新页面可恢复原始背景）
+    </div>
+  </div>
+
   <script>
-    // 声明全局变量（避免重复创建音频对象）
+    // 声明全局变量
     let audio = null;
     let isPlaying = false;
+    
+    // 页面加载时检查是否需要恢复默认背景
+    window.addEventListener('load', function() {
+      // 移除可能残留的全家福样式
+      document.body.classList.remove('family-bg');
+      
+      // 重要：如果页面是从缓存加载（比如返回按钮），强制重置背景
+      if (performance.navigation.type === 2) {
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundColor = '';
+      }
+    });
     
     document.getElementById('play-btn').addEventListener('click', function(e) {
       e.stopPropagation(); // 阻止事件冒泡
       
       // 首次点击：初始化音频
       if (!audio) {
-        audio = new Audio('muhsee.m4a'); // 已修改文件名
+        audio = new Audio('muhsee.m4a');
         
         // 权限处理
         audio.play().then(() => {
@@ -212,10 +258,18 @@
       isPlaying = true;
       updateButtonUI(btn, true);
       
-      // 播放结束自动重置
+      // 播放结束自动重置 + 彩蛋
       audio.onended = () => {
         isPlaying = false;
         updateButtonUI(btn, false);
+        
+        // 🌟 彩蛋：播放结束显示全家福背景
+        setTimeout(() => {
+          document.body.classList.add('family-bg');
+        }, 300); // 延迟300ms确保按钮状态更新
+        
+        // 滚动到顶部显示提示
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       };
       
       // 错误处理
@@ -265,6 +319,11 @@
         e.stopPropagation();
       }
     }, true);
+    
+    // 刷新页面时自动恢复默认背景
+    window.addEventListener('beforeunload', function() {
+      document.body.classList.remove('family-bg');
+    });
   </script>
 </body>
 </html>
