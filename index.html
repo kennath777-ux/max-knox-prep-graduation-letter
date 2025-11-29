@@ -90,11 +90,11 @@
     
     <p>你知道吗？每个人刚来到这个世界时，都是两手空空的。没有预设的角色，没有必须完成的任务，也没有“应该成为谁”的剧本。正因如此，你才拥有无限的可能。你不必急于找到“正确答案”，也不必害怕走一条别人没走过的路。大胆去生活，去探索，跟着你心里那个小小的声音——哪怕偶尔迷路，那也是属于你的风景。</p>
     
-    <p>当然，路上不会总是阳光灿烂。你会委屈，会难过，甚至会躲在被窝里偷偷哭——这再正常不过了。我们也是这样长大的。情绪不是弱点，而是一扇门，有情绪恰恰说明你在认真地活着。哭过之后，擦干眼泪继续往前走，因为你的前方，还有无数个值得期待的明天。</p>
+    <p>当然，路上不会总是阳光灿烂。你会委屈，会难过，甚至会躲在被窝里偷偷哭——这再正常不过了。我们也是这样长大的。情绪不是弱点，而是一扇门，有情绪恰恰说明你在认真地活着。哭过之后，擦干眼泪继续向前，因为你的前方，还有无数个值得期待的明天。</p>
     
     <p>慢慢地，允许一切自然发生——无论事情当时看起来是好是坏，只要带着觉察和勇气去经历，它们最终都会成为你成长的养分。就像那句话说的：“<span class="highlight">凡事发生，皆有利于我</span>”——这不是说世界总对你温柔，而是你有能力把每一次经历，转化为让自己更强大、更通透的契机。</p>
     
-    <p>人生就像一场很长很长的马拉松，有人起步快，有人中途发力，有人悄悄蓄力到终点才惊艳全场。所以，别总盯着别人跑得多快。累了，就慢一点；困了，就歇一会儿。真正的胜利，不是比别人快，而是始终没有放弃自己的节奏。</p>
+    <p>人生就像一场很长很长的马拉松，有人起步快，有人中途发力，有人悄悄蓄力到终点才惊艳全场。所以，别总盯着别人跑得多快。累了，就慢一点；困了，就歇一会儿。真正的胜利，不是比别人快，而是始终在坚持。</p>
     
     <p>在这条路上，你会遇到很多“已知”和“未知”——熟悉的朋友、新奇的知识、突如其来的变化。面对它们，不必急着说“好”或“不好”。世界一直在变，而你，也可以不断刷新自己对它的理解。保持开放的心，就像打开一扇窗，让风吹进来，也让光透进来。时间会帮你把经历变成智慧，把尝试变成底气。</p>
     
@@ -102,7 +102,7 @@
     
     <p>生命从不需要活成别人眼中的形状，它只是呼吸着的、会笑会哭、永远在生长的模样——把自己放在心上吧，不是自私，而是像照顾一株小树：给它阳光，给它水分，也给它自由生长的空间；这样温柔以待的生命，自会成为自己的太阳，哪怕只是微光，也足以照亮脚下的路。</p>
     
-    <p>对了，我们还为你准备了一支小小的毕业礼物——一支刻着“MX”的钢笔。它不会替你写字，但会在你写下梦想、疑问、计划，甚至涂鸦的时候，默默陪着你。愿它成为你探索世界的一个小工具，也成为一个温柔的提醒：你的人生，由你自己一笔一画书写。</p>
+    <p>对了，我们还为你准备了一份小小的毕业礼物——一支刻着“MX”的钢笔。它不会替你写字，但会在你写下梦想、疑问、计划，甚至涂鸦的时候，默默陪着你。愿它成为你探索世界的一个小工具，也成为一个温柔的提醒：你的人生，由你自己一笔一画书写。</p>
     
     <p>最后，我们想说：无论你将来选择哪条路——是继续读书、尝试新爱好、交新朋友，还是某天突然想学做蛋糕、养一只猫、环游世界（或者干脆什么都不想做，只想静静发呆）——我们都站在你身后，为你鼓掌。不是因为你“做到了什么”，而是因为你始终是那个真诚、善良、敢于做自己的Max。</p>
     
@@ -113,7 +113,7 @@
     </div>
     
     <div class="signature">
-      <p>我们爱你，永远。</p>
+      <p>我们永远爱你。</p>
       <p>爸爸 & 妈妈<br>
       2025年12月（小学毕业之际）</p>
     </div>
@@ -183,9 +183,9 @@
         // 点击页面暂停
         document.body.addEventListener('click', function pause() {
           speechSynthesis.cancel();
-          document.getElementById('play-btn').textContent = '🎧 重新播放信件';
-          document.getElementById('play-btn').style.background = '#4CAF50';
-          document.body.removeEventListener('click', pause);
+          //document.getElementById('play-btn').textContent = '🎧 重新播放信件';
+          //document.getElementById('play-btn').style.background = '#4CAF50';
+          //document.body.removeEventListener('click', pause);
         });
       } else {
         alert('您的设备不支持语音播放，请直接阅读信件。建议使用最新版Chrome或Safari浏览器。');
@@ -196,6 +196,38 @@
     window.speechSynthesis.onvoiceschanged = () => {
       console.log('中文语音已准备就绪');
     };
+    
+    document.getElementById('play-btn').addEventListener('click', function() {
+    const audio = new Audio('muhsee.m4a');
+    audio.play().catch(e => {
+      alert('请允许浏览器播放音频权限！点击地址栏的"🔊"图标 → 选择"允许"');
+    });
+    
+    this.textContent = '🔊 播放中... (点击此处暂停)';
+    this.style.background = '#ff9800';
+    
+    // 暂停功能
+    let isPlaying = true;
+    this.onclick = function() {
+      if (isPlaying) {
+        audio.pause();
+        this.textContent = '🎧 重新播放信件';
+        this.style.background = '#4CAF50';
+      } else {
+        audio.play();
+        this.textContent = '🔊 播放中... (点击此处暂停)';
+        this.style.background = '#ff9800';
+      }
+      isPlaying = !isPlaying;
+    };
+    
+    // 播放结束自动恢复按钮
+    audio.onended = function() {
+      document.getElementById('play-btn').textContent = '🎧 重新播放信件';
+      document.getElementById('play-btn').style.background = '#4CAF50';
+      isPlaying = false;
+    };
+  });
   </script>
 </body>
 </html>
